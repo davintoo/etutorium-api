@@ -69,13 +69,11 @@ class Client
     {
         $endpoint = new \Etutorium\Endpoints\CreateWebinar();
         $endpoint->setBody($params);
-        return $this->_checkResponse(
-            $this->performRequest($endpoint)
-        );
+        return $this->performRequest($endpoint);
     }
 
     /**
-     * @return array
+     * @return string|false
      */
     public function getUserLink($webinarId, $username)
     {
