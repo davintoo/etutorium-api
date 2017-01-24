@@ -23,6 +23,6 @@ class GetUserLink extends AbstractEndpoint
     public function setBody($body)
     {
         $this->uri = $this->uri . '?' . http_build_query($body);
-        echo $this->uri . "\n";
+//        echo $this->uri . "\n";
     }
 }

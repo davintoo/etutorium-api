@@ -57,7 +57,9 @@ class Client
     {
         $endpoint = new \Etutorium\Endpoints\GetWebinar();
         $endpoint->setId($webinarId);
-        return $this->performRequest($endpoint);
+        return $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
     }
 
     /**
@@ -67,7 +69,9 @@ class Client
     {
         $endpoint = new \Etutorium\Endpoints\CreateWebinar();
         $endpoint->setBody($params);
-        return $this->performRequest($endpoint);
+        return $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
     }
 
     /**
@@ -81,22 +85,57 @@ class Client
             'username' => $username
 
         ]);
-        return $this->performRequest($endpoint);
+        $res = $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
+        if ($res && count($res) > 0) {
+            return 'https://room.etutorium.com/login/' . $res['access_token'];
+        }
+        return false;
     }
 
     /**
      * @return array
      */
-    public function addUser($webinarId, $username, $userFullname)
+    public function addUser($webinarId, $username, $userFirstName, $userSecondName)
     {
         $endpoint = new \Etutorium\Endpoints\AddUser();
         $endpoint->setBody([
             'webinarID' => $webinarId,
             'username' => $username,
-            'first_name' => $userFullname
+            'first_name' => $userFirstName,
+            'second_name' => $userSecondName,
+            'send_notification' => 0
 
         ]);
-        return $this->performRequest($endpoint);
+        return $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function addPresenter($webinarId, $username, $userFirstName, $userSecondName)
+    {
+        $endpoint = new \Etutorium\Endpoints\AddPresenter();
+        $endpoint->setBody([
+            'webinarID' => $webinarId,
+            'participants' => [
+                [
+                    'email' => $username,
+                    'username' => $username,
+                    'first_name' => $userFirstName,
+                    'second_name' => $userSecondName,
+                    'role' => 'presenter'
+                ]
+            ],
+            'role' => 'presenter',
+            'send_notification' => 0
+        ]);
+        return $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
     }
 
     /**
@@ -114,7 +153,7 @@ class Client
 
     private function _getTokenPath()
     {
-        return $this->params['tokenStorePath'] . '/etutorium-token.txt';
+        return $this->params['tokenStorePath'];
     }
 
     private function _getAuthToken()
@@ -150,6 +189,14 @@ class Client
 //                exit;
         }
         return $token;
+    }
+
+    protected function _checkResponse($response)
+    {
+        if (isset($response['ok']) && $response['ok']) {
+            return $response['response'];
+        }
+        throw new \Exception('Invalid responce:' . print_r($response, true));
     }
 
     /**
