@@ -87,7 +87,7 @@ class Client
             $this->performRequest($endpoint)
         );
         if ($res && count($res) > 0) {
-            return 'https://room.etutorium.com/login/' . $res['access_token'];
+            return 'https://room.etutorium.com/login/' . $res[0]['access_token'];
         }
         return false;
     }
