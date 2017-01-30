@@ -139,6 +139,31 @@ class Client
     /**
      * @return array
      */
+    public function addModerator($webinarId, $username, $userFirstName, $userSecondName)
+    {
+        $endpoint = new \Etutorium\Endpoints\AddPresenter();
+        $endpoint->setBody([
+            'webinarID' => $webinarId,
+            'participants' => [
+                [
+                    'email' => $username,
+                    'username' => $username,
+                    'first_name' => $userFirstName,
+                    'second_name' => $userSecondName,
+                    'role' => 'moderator'
+                ]
+            ],
+            'role' => 'moderator',
+            'send_notification' => 0
+        ]);
+        return $this->_checkResponse(
+            $this->performRequest($endpoint)
+        );
+    }
+
+    /**
+     * @return array
+     */
     protected function login($username, $password)
     {
         $endpoint = new \Etutorium\Endpoints\Login();
