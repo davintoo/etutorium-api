@@ -15,7 +15,7 @@ class AddUser extends AbstractEndpoint
     protected $authRequired = true;
 
     /** @var  string */
-    protected $uri = '/api/invite/register-participant';
+    protected $uri = '/api/invite/register';
 //    protected $uri = '/invite/register-participant';
 
     /** @var  string */

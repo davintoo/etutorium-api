@@ -100,11 +100,17 @@ class Client
         $endpoint = new \Etutorium\Endpoints\AddUser();
         $endpoint->setBody([
             'webinarID' => $webinarId,
-            'username' => $username,
-            'first_name' => $userFirstName,
-            'second_name' => $userSecondName,
+            'participants' => [
+                [
+                    'email' => $username,
+                    'username' => $username,
+                    'first_name' => $userFirstName,
+                    'second_name' => $userSecondName,
+                    'role' => 'listener'
+                ]
+            ],
+            'role' => 'listener',
             'send_notification' => 0
-
         ]);
         return $this->_checkResponse(
             $this->performRequest($endpoint)
