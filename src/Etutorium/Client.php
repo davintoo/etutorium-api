@@ -4,6 +4,7 @@ namespace Etutorium;
 
 use Etutorium\Endpoints\AbstractEndpoint;
 use Etutorium\Exceptions\BaseException;
+use Etutorium\Exceptions\FailedValidationException;
 use Etutorium\Exceptions\InvalidLoginException;
 
 /**
@@ -226,7 +227,9 @@ class Client
         if (isset($response['ok']) && $response['ok']) {
             return $response['response'];
         }
-        throw new BaseException('Invalid responce:' . print_r($response, true));
+        $exception = new FailedValidationException('Invalid responce:' . print_r($response, true));
+        $exception->setResponse($response);
+        throw $exception;
     }
 
     /**
