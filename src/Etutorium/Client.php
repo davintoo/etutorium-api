@@ -3,6 +3,7 @@
 namespace Etutorium;
 
 use Etutorium\Endpoints\AbstractEndpoint;
+use Etutorium\Exceptions\BaseException;
 use Etutorium\Exceptions\InvalidLoginException;
 
 /**
@@ -225,13 +226,13 @@ class Client
         if (isset($response['ok']) && $response['ok']) {
             return $response['response'];
         }
-        throw new \Exception('Invalid responce:' . print_r($response, true));
+        throw new BaseException('Invalid responce:' . print_r($response, true));
     }
 
     /**
      * @param $endpoint AbstractEndpoint
      *
-     * @throws \Exception
+     * @throws BaseException
      * @return array
      */
     private function performRequest(AbstractEndpoint $endpoint)
@@ -263,7 +264,7 @@ class Client
                     $token
                 );
             } else {
-                throw new \Exception($ex);
+                throw new BaseException($ex);
             }
         }
     }
