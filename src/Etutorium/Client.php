@@ -89,7 +89,7 @@ class Client
             $this->performRequest($endpoint)
         );
         if ($res && count($res) > 0) {
-            return 'https://room.etutorium.com/login/' . $res[0]['access_token'];
+            return 'https://room.etutorium.com/login/' . $res[0]['access_token'] . '/true';
         }
         return false;
     }
@@ -235,8 +235,8 @@ class Client
     /**
      * @param $endpoint AbstractEndpoint
      *
-     * @throws BaseException
      * @return array
+     * @throws BaseException
      */
     private function performRequest(AbstractEndpoint $endpoint)
     {
