@@ -15,7 +15,7 @@ class CreateWebinar extends AbstractEndpoint
     protected $authRequired = true;
 
     /** @var  string */
-    protected $uri = '/rest/webinar';
+    protected $uri = '/cabinet/webinar';
 
     /** @var  string */
     protected $method = 'POST';
