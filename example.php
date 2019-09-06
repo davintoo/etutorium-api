@@ -5,11 +5,10 @@ require 'vendor/autoload.php';
 use Etutorium\Client;
 
 $c = new Client([
-    'tokenStorePath' => '/tmp',
     'endPoint' => 'https://api.etutorium.com',
-    'username' => 'xxxxx@gmail.com',
-    'password' => 'xxxxx'
+    'apiToken' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 ]);
+
 
 try {
 
