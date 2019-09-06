@@ -15,7 +15,7 @@ class GetWebinar extends AbstractEndpoint
     protected $authRequired = true;
 
     /** @var  string */
-    protected $uri = '/cabinet/webinar';
+    protected $uri = '/rest/webinar';
 
     /** @var  string */
     protected $method = 'GET';
